@@ -1,40 +1,44 @@
 package com.study.springboot.domain;
 
+import com.study.springboot.constant.ProductSellStatus;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
 @Getter
-@Entity
 @Builder
 @DynamicUpdate
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class Product {
 
     @Id
+    @Column(name = "product_num")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Product_id",nullable = false)
-    private Long id;
+    private Long p_num;
+    @Column(name = "Product_name",nullable = false)
+    private String p_name; //상품명
+    @Column(name = "price",nullable = false)
+    private int price; // 가격
+    @Column(name = "stockNumber",nullable = false)
+    private int stockNumber; // 재고량
+    @Lob // BOLB,CLOB타입 맵핑
+    @Column(name = "productDtail",nullable = false)
+    private String productDtail;
 
-    @Column(name = "product_title",nullable = false)
-    private String title;
+    @Enumerated(EnumType.STRING)
+    private ProductSellStatus ProproductSellStatus; //상품 재고상태
+    @Column(name = "regTime",nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime regTime;
 
-    @Column (name="product_content",columnDefinition ="TEXT",nullable = false )
-    private String content;
+    @Column(name = "updateTime",nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime updateTime;
 
-    @Column (name = "product_updated_at",nullable = false)
-    private LocalDateTime updatedAt;
 
-    @Column(name = "product_created_at",nullable = false)
-    private  LocalDateTime createdAt;
-
-    @Column(name = "product_views",nullable = false)
-    private int views;
-
-    @Column(name = "product_like",nullable = false)
-    private int like;
 
 }
